@@ -1,0 +1,32 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+   <head>
+      <meta charset="UTF-8" />
+      <title>Parcours List</title>
+      <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}"/>
+   </head>
+   <body>
+      <h1>Parcours List</h1>
+      <a href="addFilter">Add Filter</a>
+      <br/>
+      <a th:href="@{/chercheParcours}">No Filter</a>
+      <br/><br/>
+      <div>
+         <table border="1">
+            <tr>
+                <th>Index</th>
+                <th>Prix</th>
+                <th>Nombre de sorties</th>
+                <th>Parcours</th>
+            </tr>
+            <tr th:each ="route, iStat : ${parcours}"
+                th:style="${iStat.odd} ? 'background-color: lightgray;'" >
+                <td th:utext="${iStat.index}">...</td>
+                <td th:utext="${route.prix}">...</td>
+                <td th:utext="${route.nbSorties}">...</td>
+                <td th:utext="${route.sortieList}">...</td>
+            </tr>
+         </table>
+      </div>
+   </body>
+</html>
