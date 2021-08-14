@@ -1,6 +1,7 @@
 package com.aph.speedway.toll;
 
 import java.util.Iterator;
+import java.util.Objects;
 import java.util.Set;
 
 public class Sortie {
@@ -27,11 +28,14 @@ public class Sortie {
 
         Iterator<Peage> ite = prix.iterator();
         while (ite.hasNext()) {
-            Parcours newParcours = new Parcours(parcours.getSorties(), parcours.getPrixTotal());
-            Peage prix = ite.next();
-            newParcours.setPrixTotal(parcours.getPrixTotal() + prix.getPrix());
+            Parcours newParcours = parcours;
+            Peage peage = ite.next();
+            if (!peage.getSortie().isEnd()) {
+                newParcours = new Parcours(parcours.getSorties(), parcours.getPrixTotal());
+            }
+            newParcours.setPrixTotal(parcours.getPrixTotal() + peage.getPrix());
             newParcours.getSorties().add(this);
-            prix.getSortie().calculerTrajet(newParcours, trajets);
+            peage.getSortie().calculerTrajet(newParcours, trajets);
         }
     }
 
@@ -82,6 +86,23 @@ public class Sortie {
 
     public boolean isEnd() {
         return this.end;
+    }
+
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == this)
+            return true;
+        if (!(o instanceof Sortie)) {
+            return false;
+        }
+        Sortie sortie = (Sortie) o;
+        return Objects.equals(name, sortie.name);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name, order, start, end, prix);
     }
 
 }

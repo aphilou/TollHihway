@@ -1,0 +1,20 @@
+@startuml algo
+
+(*) --> "Sortie(parcours, trajets)"
+if "dernier péage" then
+  -->[oui] "Ajouter péage au parcours"
+  -down-> "Ajouter parcours aus trajets triés"
+  --> (*)
+else 
+  -->[non] "prochaine sortie"
+  if "dernier péage" then
+    -->[non] "Nouveau parcours\nà partir du courant"
+    --> "Ajouter au prix total\n le prix du péage"
+  else
+    --> "Ajouter au prix total\n le prix du péage"
+  endif
+  --> "Ajouter au parcours cette sortie"
+endif
+--> "Sortie(parcours, trajets)"
+
+@enduml
